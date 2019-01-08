@@ -15,7 +15,7 @@ ${EXE}: $(objects)
 smtpd.o: smtpd.c ${ASTROS_INCL_DIR}/smtpd.h ${ASTROS_INCL_DIR}/log.h ${ASTROS_INCL_DIR}/smtp_handler.h ${ASTROS_INCL_DIR}/config.h
 	${CC} smtpd.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
 
-smtp_handler.o: smtp_handler.c ${ASTROS_INCL_DIR}/smtp_handler.h
+smtp_handler.o: smtp_handler.c ${ASTROS_INCL_DIR}/smtp_handler.h ${ASTROS_INCL_DIR}/log.h
 	${CC} smtp_handler.c $(CFLAGS) -I${ASTROS_INCL_DIR} -c -o $@
 
 log.o: log.c ${ASTROS_INCL_DIR}/log.h
@@ -23,6 +23,9 @@ log.o: log.c ${ASTROS_INCL_DIR}/log.h
 
 config.o: config.c ${ASTROS_INCL_DIR}/config.h
 	${CC} config.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
+
+become_daemon.o: become_daemon.c ${ASTROS_INCL_DIR}/become_daemon.h ${ASTROS_INCL_DIR}/log.h
+	${CC} become_daemon.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
 
 .PHONY : clean
 clean : 
