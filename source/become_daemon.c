@@ -1,3 +1,5 @@
+#include "become_daemon.h"
+
 int becomeDaemon(void){
 
 	int maxfd, fd;
@@ -22,8 +24,7 @@ int becomeDaemon(void){
 	chdir("/");
 
 
-	maxfd = sysconf(_SC_OPEN_MAX);
-	
+	maxfd = sysconf(_SC_OPEN_MAX);	
 	if (maxfd == -1)
 	 maxfd = BD_MAX_CLOSE;
 	
@@ -34,7 +35,7 @@ int becomeDaemon(void){
 	if (fd != STDIN_FILENO)
 		return -1;
 
-	fd = open (NEWSTDOUTERR, O_RDWR);
+	fd = open (BD_NEW_STDOUT_ERR, O_RDWR);
 	if (fd != STDOUT_FILENO)
 		return -1;
 
