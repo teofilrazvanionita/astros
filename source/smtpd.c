@@ -1,5 +1,7 @@
 #include "smtpd.h"
 #include "become_daemon.h"
+#include "errorlog.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -14,7 +16,7 @@ int main(int argc, char *argv[])
         hints.ai_flags = AI_PASSIVE; // use my IP
         
 	if ((rv = becomeDaemon()) == -1){
-		write(STDERR_FILENO, "becomeDaemon() error\n", 19);
+		ERROR("becomeDaemon() error");
 		exit(1);
 	}	
 
@@ -26,30 +28,30 @@ int main(int argc, char *argv[])
 	// loop through all the results and bind to the first we can
 	for(p = servinfo; p != NULL; p = p->ai_next) {
 		if ((sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
-			perror("server: socket");
+			ERROR("server: socket");
 			continue;
 		}
 		if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
-			perror("setsockopt");
+			ERROR("setsockopt");
 			exit(1);
 		}
 		if (bind(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
 			close(sockfd);
-			perror("server: bind");
+			ERROR("server: bind");
 			continue;
 		}
 		break;
 	}
        
         if (p == NULL)  {
-		perror("server: failed to bind");
+		ERROR("server: failed to bind");
 		exit (EXIT_FAILURE);
 	}
 
 	freeaddrinfo(servinfo); // all done with this structure
 
 	if (listen(sockfd, BACKLOG) == -1) {
-		perror("listen");
+		ERROR("listen");
 		exit(1);
 	}
 
