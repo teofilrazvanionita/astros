@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
         hints.ai_flags = AI_PASSIVE; // use my IP
         
 	if ((rv = becomeDaemon()) == -1){
-		ERROR("becomeDaemon() error");
+		ERROR("becomeDaemon error");
 		exit(1);
 	}	
 
