@@ -5,4 +5,6 @@ typedef struct {
 	char ServerName[64];
 }CONFIG_DATA;
 
+void readConfigFile (void);
+
 #endif
