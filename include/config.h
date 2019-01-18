@@ -2,8 +2,13 @@
 #define __CONFIG_H
 
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
-#define CONFIG_FILE "../include/astros.conf"
+
+#define CONFIG_FILE "/etc/astros/main.cf"
 
 typedef struct {
 	char myhostname[255];
@@ -18,5 +23,6 @@ typedef struct {
 extern CONFIG_DATA smtpd_config;
 
 void parseConfigFile (void);
+void setDefaults (void);
 
 #endif

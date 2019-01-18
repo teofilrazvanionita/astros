@@ -21,7 +21,7 @@ smtp_handler.o: smtp_handler.c ${ASTROS_INCL_DIR}/smtp_handler.h ${ASTROS_INCL_D
 log.o: log.c ${ASTROS_INCL_DIR}/log.h
 	${CC} log.c $(CFLAGS) -I${ASTROS_INCL_DIR} -c -o $@
 
-config.o: config.c ${ASTROS_INCL_DIR}/config.h
+config.o: config.c ${ASTROS_INCL_DIR}/config.h ${ASTROS_INCL_DIR}/errorlog.h
 	${CC} config.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
 
 become_daemon.o: become_daemon.c ${ASTROS_INCL_DIR}/become_daemon.h ${ASTROS_INCL_DIR}/errorlog.h
