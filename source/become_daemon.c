@@ -1,5 +1,4 @@
 #include "become_daemon.h"
-#include "errorlog.h"
 
 int becomeDaemon(void){
 

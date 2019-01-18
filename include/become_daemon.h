@@ -7,6 +7,8 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+#include "errorlog.h"
+
 #define BD_NEW_STDOUT_ERR "/tmp/astros.err"
 #define BD_MAX_CLOSE 8192
 
