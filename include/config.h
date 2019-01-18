@@ -6,7 +6,12 @@
 #define CONFIG_FILE "../include/astros.conf"
 
 typedef struct {
-	char ServerName[255];
+	char myhostname[255];
+	char mydomain[255];
+	char myorigin[255];
+	char setgid_group[255];
+	char message_size_limit[255];
+	char smtpd_recipient_restrictions[255];
 }CONFIG_DATA;
 
 void parseConfigFile (void);
