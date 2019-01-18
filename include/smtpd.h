@@ -10,7 +10,9 @@
 #include <errno.h>
 #include <unistd.h>
 
-#include "smtpd.h"
+
+#include "errorlog.h"
+#include "become_daemon.h"
 
 
 #define PORT "25"

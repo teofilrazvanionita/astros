@@ -1,6 +1,4 @@
 #include "smtpd.h"
-#include "become_daemon.h"
-#include "errorlog.h"
 
 
 int main(int argc, char *argv[])
