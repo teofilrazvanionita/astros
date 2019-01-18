@@ -1,2 +1,2 @@
 # astros
-SMTP/ESMTP mail system with many Postfix similaryties
+SMTP/ESMTP mail system with many Postfix similarities
