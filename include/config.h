@@ -15,6 +15,8 @@ typedef struct {
 	char smtpd_recipient_restrictions[255];
 }CONFIG_DATA;
 
+extern CONFIG_DATA smtpd_config;
+
 void parseConfigFile (void);
 
 #endif
