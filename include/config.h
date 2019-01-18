@@ -8,6 +8,8 @@
 #include <stdlib.h>
 
 
+#include "errorlog.h"
+
 #define CONFIG_FILE "/etc/astros/main.cf"
 
 typedef struct {

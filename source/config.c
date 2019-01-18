@@ -1,5 +1,5 @@
 #include "config.h"
-#include "errorlog.h"
+
 
 CONFIG_DATA smtpd_config;
 
