@@ -9,7 +9,7 @@ CFLAGS = -g \
 	   -Wno-sign-compare \
 	   -Wno-unused-parameter \
 	   -Wextra \
-    
+	   -DDEBUG    
 
 LDLIBS = -lpthread
 

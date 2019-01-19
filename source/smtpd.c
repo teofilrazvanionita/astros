@@ -7,10 +7,6 @@ int main(int argc, char *argv[])
 	struct addrinfo hints, *servinfo, *p;
         int rv; // return value
        	int yes = 1;
-
-	/* initialization */
-        loadConfigs();
-	
 	
 	memset(&hints, 0, sizeof hints);
         hints.ai_family = AF_INET;
@@ -20,7 +16,10 @@ int main(int argc, char *argv[])
 	if ((rv = becomeDaemon()) == -1){
 		ERROR("becomeDaemon error");
 		exit(1);
-	}	
+	}
+
+	/* initialization */
+        loadConfigs();
 
         if ((rv = getaddrinfo(NULL, PORT, &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));

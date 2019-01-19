@@ -25,24 +25,20 @@ int becomeDaemon(void){
 	umask(0);
 	chdir("/");
 
-
 	maxfd = sysconf(_SC_OPEN_MAX);	
 	if (maxfd == -1)
-	 maxfd = BD_MAX_CLOSE;
-	
-       	for (fd = 0; fd < maxfd; fd++)
-		if (close(fd) == -1){
-			ERROR("close");
-			return -1;
-		}
+		maxfd = BD_MAX_CLOSE;
 
-	fd = open ("/dev/null", O_RDWR);
+       	for (fd = 0; fd < maxfd; fd++)
+		close(fd);
+
+	fd = open ("/dev/null", O_RDONLY);
 	if (fd != STDIN_FILENO){
 		ERROR("open");
 		return -1;
 	}
 
-	fd = open (BD_NEW_STDOUT_ERR, O_RDWR);
+	fd = open (BD_NEW_STDOUT_ERR, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 	if (fd != STDOUT_FILENO){
 		ERROR("open");
 		return -1;
