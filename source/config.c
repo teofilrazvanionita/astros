@@ -3,6 +3,12 @@
 
 CONFIG_DATA smtpd_config;
 
+void loadConfigs (void)
+{
+	setDefaults();
+	parseConfigFile();
+}
+
 void setDefaults (void)
 {
 	memset((void *)&smtpd_config, 0, sizeof(CONFIG_DATA));

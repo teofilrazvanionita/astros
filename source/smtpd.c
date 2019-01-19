@@ -8,7 +8,11 @@ int main(int argc, char *argv[])
         int rv; // return value
        	int yes = 1;
 
-        memset(&hints, 0, sizeof hints);
+	/* initialization */
+        loadConfigs();
+	
+	
+	memset(&hints, 0, sizeof hints);
         hints.ai_family = AF_INET;
         hints.ai_socktype = SOCK_STREAM;
         hints.ai_flags = AI_PASSIVE; // use my IP
