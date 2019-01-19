@@ -11,14 +11,9 @@ void loadConfigs (void)
 
 void setDefaults (void)
 {
-	int rv;
 	memset((void *)&smtpd_config, 0, sizeof(CONFIG_DATA));
 
-	if((rv = gethostname(smtpd_config.myhostname, sizeof(smtpd_config.myhostname))) == -1){
-		ERROR("gethostname");
-		exit(EXIT_FAILURE);
-	}
-	Dprintf("myhostname = %s\n", smtpd_config.myhostname);
+	set_myhostname_Defaults();
 }
 
 void parseConfigFile (void)
@@ -30,4 +25,15 @@ void parseConfigFile (void)
 		ERROR("open");
 		exit(EXIT_FAILURE);
 	}
+}
+
+
+void set_myhostname_Defaults (void)
+{
+	int rv;
+	if((rv = gethostname(smtpd_config.myhostname, sizeof(smtpd_config.myhostname))) == -1){
+		ERROR("gethostname");
+		exit(EXIT_FAILURE);
+	}
+	Dprintf("myhostname = %s\n", smtpd_config.myhostname);
 }

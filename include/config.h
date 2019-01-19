@@ -26,5 +26,6 @@ extern CONFIG_DATA smtpd_config;
 void parseConfigFile (void);
 void setDefaults (void);
 void loadConfigs (void);
+void set_myhostname_Defaults (void);
 
 #endif
