@@ -49,5 +49,7 @@ int becomeDaemon(void){
 		return -1;
 	}
 
+	setbuf(stdout,NULL);
+
 	return 0;
 }
