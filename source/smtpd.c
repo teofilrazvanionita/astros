@@ -56,5 +56,21 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+        while (1){
+        	int remote_sfd;
+	        socklen_t sin_size;
+        	struct sockaddr their_addr; // connector's address information
+                
+		remote_sfd = accept(sockfd, &their_addr, &sin_size);
+                if(remote_sfd == -1){
+                    	perror("accept");
+			continue;
+                }
+
+		addConnection(remote_sfd, their_addr);
+        }
+
 	return 0;
 }
+
+

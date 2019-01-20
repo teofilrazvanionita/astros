@@ -14,6 +14,7 @@
 #include "errorlog.h"
 #include "become_daemon.h"
 #include "config.h"
+#include "connection_threads.h"
 
 #define PORT "25"
 #define BACKLOG 1000
