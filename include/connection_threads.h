@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <pthread.h>
 
 #include "errorlog.h"
 
@@ -20,10 +21,12 @@ typedef struct tnod{
 	struct sockaddr their_addr;
 	
 	struct tnod *next;
-}TNOD;
+}CONNECTION;
 
 void addConnection (int remote_sfd, struct sockaddr their_addr);
-int loadNOD (TNOD *p, int remote_sfd, struct sockaddr their_addr);
-void freeNOD (TNOD *p);
+int loadNOD (CONNECTION *p, int remote_sfd, struct sockaddr their_addr);
+void freeNOD (CONNECTION *p);
+
+static void * threadFunc (void * arg);
 
 #endif

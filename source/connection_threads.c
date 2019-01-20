@@ -1,19 +1,20 @@
 #include "connection_threads.h"
 
-TNOD *first, *last;
+CONNECTION *first, *last;
 
 void addConnection(int remote_sfd, struct sockaddr their_addr)
 {
-	TNOD *p; 
-		
-	if(p = (TNOD *)malloc(sizeof(TNOD)) == 0){
+	CONNECTION *p; 
+	int i;
+
+	if((p = (CONNECTION *)malloc(sizeof(CONNECTION))) == 0){
 		ERROR("insufficient memory at list creation");
 		exit(EXIT_FAILURE);	
 	}
 
-	if((i=loadNOD(p))!=1){
+	if((i=loadNOD(p, remote_sfd, their_addr))!=1){
 		freeNOD(p);
-		return i;
+		return;
 	}
 
 	if(last!=NULL)
@@ -25,8 +26,10 @@ void addConnection(int remote_sfd, struct sockaddr their_addr)
 	last -> next = NULL;
 }
 
-int loadNOD(TNOD *p, int remote_sfd, struct sockaddr their_addr)
+int loadNOD(CONNECTION *p, int remote_sfd, struct sockaddr their_addr)
 {
+	int s;
+
 	p -> state = TS_ALIVE;
 	s = pthread_create(&(p->tid), NULL, threadFunc, NULL);
 	if (s != 0){
@@ -39,9 +42,13 @@ int loadNOD(TNOD *p, int remote_sfd, struct sockaddr their_addr)
 	return 1;
 }
 
-void freeNOD(TNOD *p)
+void freeNOD(CONNECTION *p)
 {
 	free(p);
 }
 
+static void * threadFunc(void *arg)
+{
 
+	return NULL;
+}
