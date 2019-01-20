@@ -5,7 +5,7 @@ LINUX_EXE = smtpd
 EXE = ${LINUX_EXE}
 
 
-objects = smtpd.o smtp_handler.o log.o config.o become_daemon.o errorlog.o
+objects = smtpd.o smtp_handler.o log.o config.o become_daemon.o time_and_date.o
 
 all : ${EXE}
 
@@ -27,9 +27,8 @@ config.o: config.c ${ASTROS_INCL_DIR}/config.h ${ASTROS_INCL_DIR}/errorlog.h
 become_daemon.o: become_daemon.c ${ASTROS_INCL_DIR}/become_daemon.h ${ASTROS_INCL_DIR}/errorlog.h
 	${CC} become_daemon.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
 
-errorlog.o: errorlog.c ${ASTROS_INCL_DIR}/errorlog.h
-	${CC} errorlog.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
-
+time_and_date.o: time_and_date.c ${ASTROS_INCL_DIR}/time_and_date.h
+	${CC} time_and_date.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
 
 .PHONY : clean
 clean : 
