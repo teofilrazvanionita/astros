@@ -8,8 +8,11 @@
 
 #include "time_and_date.h"
 
-void ERROR (const char *msg);
-void PTHREAD_ERROR (const char *msg, int err);
+#define ERROR(msg)	printf("%s [%s]:%d " msg ": errno %d: %s\n", getTime(), __FILE__, __LINE__, errno, strerror(errno));
+#define PTHREAD_ERROR(msg, err)	printf("%s [%s]:%d " msg ": errnum %d: %s\n", getTime(), __FILE__, __LINE__,  err, strerror(err));
+
+
+
 
 #ifdef DEBUG
 #define Dprintf(msg,...) printf("%s [%s]:%d " msg, getTime(), __FILE__, __LINE__, ##__VA_ARGS__)
