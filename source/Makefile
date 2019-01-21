@@ -5,7 +5,7 @@ LINUX_EXE = smtpd
 EXE = ${LINUX_EXE}
 
 
-objects = smtpd.o smtp_handler.o log.o config.o become_daemon.o time_and_date.o connection_threads.o
+objects = smtpd.o smtp_handler.o log.o config.o become_daemon.o time_and_date.o connection_threads.o errorlog.o
 
 all : ${EXE}
 
@@ -32,6 +32,9 @@ time_and_date.o: time_and_date.c ${ASTROS_INCL_DIR}/time_and_date.h
 
 connection_threads.o: connection_threads.c ${ASTROS_INCL_DIR}/connection_threads.h ${ASTROS_INCL_DIR}/errorlog.h
 	${CC} connection_threads.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
+
+errorlog.o: errorlog.c ${ASTROS_INCL_DIR}/errorlog.h ${ASTROS_INCL_DIR}/time_and_date.h
+	${CC} errorlog.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
 
 
 .PHONY : clean
