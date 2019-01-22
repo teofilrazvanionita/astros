@@ -6,5 +6,6 @@
 #include <stdlib.h>
 
 char * getTime (void);
+void destructTime(char *p);
 
 #endif

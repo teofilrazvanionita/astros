@@ -18,7 +18,7 @@ char * getTime (void)
 	return time_and_date;
 }
 
-void destructTime (void)
+void destructTime (char *p)
 {
-	free(time_and_date);
+	free(p);
 }
