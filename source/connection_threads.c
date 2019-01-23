@@ -109,7 +109,7 @@ void deleteKeyNOD (int KEY_TERMINATED)
 void * threadFree(void *arg)
 {
 	while(1){
-		deleteKeyNOD(TS_TERMINATED);
+		deleteKeyNOD(TS_JOINED);
 		sleep(10);
 	}
 }
