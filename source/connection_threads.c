@@ -1,7 +1,7 @@
 #include "connection_threads.h"
 
 static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
-CONNECTION *first, *last;
+CONNECTION *first = NULL, *last = NULL;
 
 void addConnection(int remote_sfd, struct sockaddr their_addr)
 {
