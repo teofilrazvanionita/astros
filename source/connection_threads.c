@@ -60,7 +60,7 @@ void freeNOD(CONNECTION *p)
 	free(p);
 }
 
-static void * threadFunc(void *arg)
+void * threadFunc(void *arg)
 {
 
 	CONNECTION *p = (CONNECTION *) arg;
@@ -74,3 +74,43 @@ static void * threadFunc(void *arg)
 
 	return NULL;
 }
+
+void deleteKeyNOD (int KEY_TERMINATED)
+{
+	CONNECTION *q, *q1;
+
+	q1 = NULL;
+	q = first;
+
+	while(q){
+		if(q -> state == KEY_TERMINATED)
+			break;
+		q1 = q;
+		q = q -> next;
+	}
+
+	if(q == NULL)
+		return;
+
+	if(q == first){
+		first = first -> next;
+		freeNOD(q);
+		if(first == NULL)
+			last = NULL;
+	}
+	else{
+		q1 -> next = q -> next;
+		if(q == last)
+			last = q1;
+		freeNOD(q);
+	}
+}
+
+void * threadFree(void *arg)
+{
+	while(1){
+		deleteKeyNOD(TS_TERMINATED);
+		sleep(10);
+	}
+}
+

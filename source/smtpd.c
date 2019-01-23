@@ -5,9 +5,10 @@ int main(int argc, char *argv[])
 {
         int sockfd;
 	struct addrinfo hints, *servinfo, *p;
-        int rv; // return value
+        int rv ,s; // return value
        	int yes = 1;
-	
+	pthread_t tid_free;
+
 	memset(&hints, 0, sizeof hints);
         hints.ai_family = AF_INET;
         hints.ai_socktype = SOCK_STREAM;
@@ -20,6 +21,13 @@ int main(int argc, char *argv[])
 
 	/* initialization */
         loadConfigs();
+	
+	/* create a thread for joining all terminated connections */
+	s = pthread_create(&tid_free, NULL, threadFree, NULL);
+	if (s != 0){
+		PTHREAD_ERROR("pthread_create", s);
+		return 0;
+	}
 
         if ((rv = getaddrinfo(NULL, PORT, &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
