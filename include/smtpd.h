@@ -19,4 +19,6 @@
 #define PORT "25"
 #define BACKLOG 1000
 
+void handleConnection (int remote_sfd, struct sockaddr their_addr);
+
 #endif

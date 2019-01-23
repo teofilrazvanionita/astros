@@ -24,7 +24,7 @@ typedef struct tnod{
 	struct tnod *next;
 }CONNECTION;
 
-void addConnection (int remote_sfd, struct sockaddr their_addr);
+int addConnection (int remote_sfd, struct sockaddr their_addr);
 int loadNOD (CONNECTION *p, int remote_sfd, struct sockaddr their_addr);
 void freeNOD (CONNECTION *p);
 void deleteKeyNOD (int KEY_TERMINATED);

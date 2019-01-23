@@ -3,7 +3,7 @@
 static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 CONNECTION *first = NULL, *last = NULL;
 
-void addConnection(int remote_sfd, struct sockaddr their_addr)
+int addConnection(int remote_sfd, struct sockaddr their_addr)
 {
 	CONNECTION *p; 
 	int i, s;
@@ -21,7 +21,7 @@ void addConnection(int remote_sfd, struct sockaddr their_addr)
 
 	if((i=loadNOD(p, remote_sfd, their_addr))!=1){
 		freeNOD(p);
-		return;
+		return -1; /* error return */
 	}
 
 	if(last!=NULL)
@@ -37,6 +37,8 @@ void addConnection(int remote_sfd, struct sockaddr their_addr)
 		PTHREAD_ERROR("pthread_mutex_lock", s);
 		exit(EXIT_FAILURE);
 	}
+
+	return 0; /* normal return */
 }
 
 int loadNOD(CONNECTION *p, int remote_sfd, struct sockaddr their_addr)

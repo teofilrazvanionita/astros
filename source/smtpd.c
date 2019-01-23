@@ -75,7 +75,9 @@ int main(int argc, char *argv[])
 			continue;
                 }
 
-		addConnection(remote_sfd, their_addr);
+		if(addConnection(remote_sfd, their_addr) == -1)
+			continue;
+		handleConnection(remote_sfd, their_addr);
         }
 
 	return 0;
