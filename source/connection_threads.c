@@ -108,9 +108,21 @@ void deleteKeyNOD (int KEY_TERMINATED)
 
 void * threadFree(void *arg)
 {
+	int s;
+
 	while(1){
+		s = pthread_mutex_lock(&mtx);
+		if(s != 0){
+			PTHREAD_ERROR("pthread_mutex_lock", s);
+			exit(EXIT_FAILURE);
+		}
 		deleteKeyNOD(TS_JOINED);
-		sleep(10);
+		s = pthread_mutex_unlock(&mtx);
+		if(s != 0){
+			PTHREAD_ERROR("pthread_mutex_lock", s);
+			exit(EXIT_FAILURE);
+		}
+		sleep(5);
 	}
 }
 
