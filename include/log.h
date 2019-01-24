@@ -12,6 +12,8 @@
 #include <pthread.h>
 
 #include "errorlog.h"
+#include "time_and_date.h"
+#include "config.h"
 
 #define LOG_FILE "/var/log/maillog"
 
