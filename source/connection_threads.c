@@ -44,15 +44,16 @@ int addConnection(int remote_sfd, struct sockaddr their_addr)
 int loadNOD(CONNECTION *p, int remote_sfd, struct sockaddr their_addr)
 {
 	int s;
-
+	
 	p -> state = TS_ALIVE;
+	p -> remote_sfd = remote_sfd;
+	p -> their_addr = their_addr;
+
 	s = pthread_create(&(p->tid), NULL, threadFunc, p);
 	if (s != 0){
 		PTHREAD_ERROR("pthread_create", s);
 		return 0;
 	}
-	p -> remote_sfd = remote_sfd;
-	p -> their_addr = their_addr;
 
 	return 1;
 }
@@ -67,6 +68,8 @@ void * threadFunc(void *arg)
 
 	CONNECTION *p = (CONNECTION *) arg;
 
+
+	handleConnection(p->remote_sfd, p->their_addr);
 
 	if(close(p -> remote_sfd) == -1){
 		ERROR("close");

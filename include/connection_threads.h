@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include "errorlog.h"
+#include "smtp_handler.h"
 
 enum tstate {
 	TS_ALIVE,

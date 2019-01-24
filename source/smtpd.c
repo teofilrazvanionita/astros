@@ -82,7 +82,6 @@ int main(int argc, char *argv[])
 			}
 			continue;
 		}
-		handleConnection(remote_sfd, their_addr);
         }
 
 	return 0;
