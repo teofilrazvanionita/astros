@@ -33,5 +33,17 @@ char * getTime (void)
 
 void destructTime (char *p)
 {
+	int s;
+
+	s = pthread_mutex_lock(&mtx);
+	if (s != 0){
+		PTHREAD_ERROR("pthread_mutex_lock", s);
+		exit(EXIT_FAILURE);
+	}
 	free(p);
+	s = pthread_mutex_unlock(&mtx);
+	if (s != 0){
+		PTHREAD_ERROR("pthread_mutex_lock", s);
+		exit(EXIT_FAILURE);
+	}
 }
