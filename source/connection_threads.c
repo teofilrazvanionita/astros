@@ -3,7 +3,7 @@
 static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 CONNECTION *first = NULL, *last = NULL;
 
-int addConnection(int remote_sfd, struct sockaddr their_addr)
+int addConnection (int remote_sfd, struct sockaddr their_addr)
 {
 	CONNECTION *p; 
 	int i, s;
@@ -41,7 +41,7 @@ int addConnection(int remote_sfd, struct sockaddr their_addr)
 	return 0; /* normal return */
 }
 
-int loadNOD(CONNECTION *p, int remote_sfd, struct sockaddr their_addr)
+int loadNOD (CONNECTION *p, int remote_sfd, struct sockaddr their_addr)
 {
 	int s;
 	
@@ -58,12 +58,24 @@ int loadNOD(CONNECTION *p, int remote_sfd, struct sockaddr their_addr)
 	return 1;
 }
 
-void freeNOD(CONNECTION *p)
+void freeNOD (CONNECTION *p)
 {
 	free(p);
 }
 
-void * threadFunc(void *arg)
+void joinNOD (CONNECTION *p)
+{	
+	int s;
+
+	s = pthread_join(p -> tid, NULL);
+	if(s != 0){
+		PTHREAD_ERROR("pthread_join", s);
+		exit(EXIT_FAILURE);
+	}
+	p -> state = TS_JOINED;
+}
+
+void * threadFunc (void *arg)
 {
 
 	CONNECTION *p = (CONNECTION *) arg;
@@ -80,7 +92,7 @@ void * threadFunc(void *arg)
 	return NULL;
 }
 
-void deleteKeyNOD (int KEY_TERMINATED)
+void deleteKeyNOD (int KEY_JOINED)
 {
 	CONNECTION *q, *q1;
 
@@ -88,7 +100,7 @@ void deleteKeyNOD (int KEY_TERMINATED)
 	q = first;
 
 	while(q){
-		if(q -> state == KEY_TERMINATED)
+		if(q -> state == KEY_JOINED)
 			break;
 		q1 = q;
 		q = q -> next;
@@ -111,9 +123,33 @@ void deleteKeyNOD (int KEY_TERMINATED)
 	}
 }
 
-void * threadFree(void *arg)
+void updateKeyNOD (int KEY_TERMINATED)
+{
+	CONNECTION *q;
+
+	q = first;
+
+	while(q){
+		if(q -> state == KEY_TERMINATED)
+			break;
+		q = q -> next;
+	}
+
+	if(q == NULL)
+		return;
+
+	joinNOD(q);
+}
+
+void * threadFree (void *arg)
 {
 	int s;
+
+	s = pthread_detach(pthread_self());
+	if(s != 0){
+		PTHREAD_ERROR("pthread_detach", s);
+		exit(EXIT_FAILURE);
+	}
 
 	while(1){
 		s = pthread_mutex_lock(&mtx);
@@ -128,6 +164,32 @@ void * threadFree(void *arg)
 			exit(EXIT_FAILURE);
 		}
 		sleep(5);
+	}
+}
+
+
+void * threadJoin (void *arg)
+{
+	int s;
+
+	s = pthread_detach(pthread_self());
+	if(s != 0){
+		PTHREAD_ERROR("pthread_detach", s);
+		exit(EXIT_FAILURE);
+	}
+
+	while(1){
+		s = pthread_mutex_lock(&mtx);
+		if(s != 0){
+			PTHREAD_ERROR("pthread_mutex_lock", s);
+			exit(EXIT_FAILURE);
+		}
+		updateKeyNOD(TS_TERMINATED);
+		s = pthread_mutex_unlock(&mtx);
+		if(s != 0){
+			PTHREAD_ERROR("pthread_mutex_lock", s);
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 

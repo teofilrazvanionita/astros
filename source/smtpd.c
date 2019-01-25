@@ -22,12 +22,19 @@ int main(int argc, char *argv[])
 	/* initialization */
         loadConfigs();
 	
-	/* create a thread for joining all terminated connections */
+	/* create a thread for removing all the joined threads */
 	s = pthread_create(&tid_free, NULL, threadFree, NULL);
 	if (s != 0){
 		PTHREAD_ERROR("pthread_create", s);
 		return 0;
 	}
+	/* create a thread for joining all terminated connections */
+	s = pthread_create(&tid_free, NULL, threadJoin, NULL);
+	if (s != 0){
+		PTHREAD_ERROR("pthread_create", s);
+		return 0;
+	}
+
 
         if ((rv = getaddrinfo(NULL, PORT, &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));

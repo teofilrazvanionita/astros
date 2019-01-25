@@ -28,9 +28,11 @@ typedef struct tnod{
 int addConnection (int remote_sfd, struct sockaddr their_addr);
 int loadNOD (CONNECTION *p, int remote_sfd, struct sockaddr their_addr);
 void freeNOD (CONNECTION *p);
-void deleteKeyNOD (int KEY_TERMINATED);
+void deleteKeyNOD (int KEY_JOINED);
+void updateKeyNOD (int KEY_TERMINATED);
+void joinNOD (CONNECTION *p);
 
 void * threadFunc (void * arg);
 void * threadFree (void * arg);
-
+void * threadJoin (void * arg);
 #endif
