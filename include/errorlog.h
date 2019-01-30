@@ -8,14 +8,14 @@
 
 #include "time_and_date.h"
 
-#define ERROR(msg)	char *p  = getTime(); printf("%s [%s]:%d " msg ": errno %d: %s\n", p,  __FILE__, __LINE__, errno, strerror(errno)); destructTime(p); 
-#define PTHREAD_ERROR(msg, err)	char *p = getTime(); printf("%s [%s]:%d " msg ": errnum %d: %s\n", p, __FILE__, __LINE__,  err, strerror(err)); destructTime(p);
+#define ERROR(msg)	char *ERROR_p  = getTime(); printf("%s [%s]:%d " msg ": errno %d: %s\n", ERROR_p,  __FILE__, __LINE__, errno, strerror(errno)); destructTime(ERROR_p); 
+#define PTHREAD_ERROR(msg, err)	char *ERROR_p = getTime(); printf("%s [%s]:%d " msg ": errnum %d: %s\n", ERROR_p, __FILE__, __LINE__,  err, strerror(err)); destructTime(ERROR_p);
 
 
 
 
 #ifdef DEBUG
-#define Dprintf(msg,...) char *p = getTime(); printf("%s [%s]:%d " msg, p, __FILE__, __LINE__, ##__VA_ARGS__); destructTime(p);
+#define Dprintf(msg,...) char *Dprintf_p = getTime(); printf("%s [%s]:%d " msg, Dprintf_p, __FILE__, __LINE__, ##__VA_ARGS__); destructTime(Dprintf_p);
 #else
 #define Dprintf(msg,...)                /* do nothing */
 #endif 

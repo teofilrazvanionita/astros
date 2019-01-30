@@ -210,12 +210,16 @@ AGAIN:	if((rv = getnameinfo(&their_addr, sizeof(struct sockaddr), p, 256, NULL, 
 			}
 		}else if(errno == EAI_NONAME){
 			strcpy(p, "unknown");
+			Dprintf("name:%s\n",p);
 			return;
 		}
 		else{
 			strcpy(p, "unknown");
+			Dprintf("name:%s\n",p);
 			return;
 		}
-		
 	}
+	if(!strlen(p))
+		strcpy(p, "unknown");
+	Dprintf("name:%s\n",p);
 }

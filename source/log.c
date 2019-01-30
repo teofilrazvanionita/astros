@@ -18,7 +18,7 @@ void logConnectFrom (struct sockaddr *their_addr_p, char *remote_name)
 
 	ptd = getTime();
 	strcpy(ip_addr, inet_ntoa((((struct sockaddr_in *)their_addr_p)->sin_addr)));
-	sprintf(connection_from, "%s %s astros/smtpd[%d]: Connect from %s[%s]\n", ptd, smtpd_config.myhostname, getpid(), remote_name, ip_addr);
+	sprintf(connection_from, "%s %s astros/smtpd[%d]: connect from %s[%s]\n", ptd, smtpd_config.myhostname, getpid(), remote_name, ip_addr);
 	destructTime(ptd);
 
 	s = pthread_mutex_lock(&mtx);
