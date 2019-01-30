@@ -17,6 +17,6 @@
 
 #define LOG_FILE "/var/log/maillog"
 
-void logConnectFrom (struct sockaddr *their_addr_p);
+void logConnectFrom (struct sockaddr *their_addr_p, char *remote_name);
 
 #endif

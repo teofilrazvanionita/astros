@@ -15,7 +15,7 @@ ${EXE}: $(objects)
 smtpd.o: smtpd.c ${ASTROS_INCL_DIR}/smtpd.h ${ASTROS_INCL_DIR}/log.h ${ASTROS_INCL_DIR}/errorlog.h ${ASTROS_INCL_DIR}/smtp_handler.h ${ASTROS_INCL_DIR}/config.h ${ASTROS_INCL_DIR}/connection_threads.h
 	${CC} smtpd.c ${CFLAGS} -I${ASTROS_INCL_DIR} -c -o $@
 
-smtp_handler.o: smtp_handler.c ${ASTROS_INCL_DIR}/smtp_handler.h ${ASTROS_INCL_DIR}/log.h
+smtp_handler.o: smtp_handler.c ${ASTROS_INCL_DIR}/smtp_handler.h ${ASTROS_INCL_DIR}/log.h ${ASTROS_INCL_DIR}/connection_threads.h 
 	${CC} smtp_handler.c $(CFLAGS) -I${ASTROS_INCL_DIR} -c -o $@
 
 log.o: log.c ${ASTROS_INCL_DIR}/log.h

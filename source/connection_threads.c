@@ -49,6 +49,8 @@ int loadNOD (CONNECTION *p, int remote_sfd, struct sockaddr their_addr)
 	p -> remote_sfd = remote_sfd;
 	p -> their_addr = their_addr;
 
+	getName(p -> remote_name, p -> their_addr);
+
 	s = pthread_create(&(p->tid), NULL, threadFunc, p);
 	if (s != 0){
 		PTHREAD_ERROR("pthread_create", s);
@@ -81,7 +83,7 @@ void * threadFunc (void *arg)
 	CONNECTION *p = (CONNECTION *) arg;
 
 
-	handleConnection(p->remote_sfd, p->their_addr);
+	handleConnection(p);
 
 	if(close(p -> remote_sfd) == -1){
 		ERROR("close");
@@ -193,3 +195,27 @@ void * threadJoin (void *arg)
 	}
 }
 
+void getName (char *p, struct sockaddr their_addr)
+{
+	int rv, k=0;
+
+	memset(p, 0, 256);
+
+AGAIN:	if((rv = getnameinfo(&their_addr, sizeof(struct sockaddr), p, 256, NULL, 0, NI_NAMEREQD)) == -1){
+		if(errno == EAI_AGAIN){
+			k++;
+			if(k<5) goto AGAIN;
+			if(k == 5){
+				strcpy(p, "unknown");
+			}
+		}else if(errno == EAI_NONAME){
+			strcpy(p, "unknown");
+			return;
+		}
+		else{
+			strcpy(p, "unknown");
+			return;
+		}
+		
+	}
+}

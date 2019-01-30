@@ -2,7 +2,7 @@
 
 static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 
-void logConnectFrom (struct sockaddr *their_addr_p)
+void logConnectFrom (struct sockaddr *their_addr_p, char *remote_name)
 {
 	int log_fd, s;
 	char ip_addr[16];
@@ -18,7 +18,7 @@ void logConnectFrom (struct sockaddr *their_addr_p)
 
 	ptd = getTime();
 	strcpy(ip_addr, inet_ntoa((((struct sockaddr_in *)their_addr_p)->sin_addr)));
-	sprintf(connection_from, "%s %s astros/smtpd[%d]: Connect from %s\n", ptd, smtpd_config.myhostname, getpid(), ip_addr);
+	sprintf(connection_from, "%s %s astros/smtpd[%d]: Connect from %s[%s]\n", ptd, smtpd_config.myhostname, getpid(), remote_name, ip_addr);
 	destructTime(ptd);
 
 	s = pthread_mutex_lock(&mtx);
