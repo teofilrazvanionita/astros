@@ -62,6 +62,7 @@ int loadNOD (CONNECTION *p, int remote_sfd, struct sockaddr their_addr)
 
 void freeNOD (CONNECTION *p)
 {
+	Dprintf("freeing memory\n");
 	free(p);
 }
 
