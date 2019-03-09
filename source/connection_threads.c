@@ -8,15 +8,15 @@ int addConnection (int remote_sfd, struct sockaddr their_addr)
 	CONNECTION *p; 
 	int i, s;
 
-	if((p = (CONNECTION *)malloc(sizeof(CONNECTION))) == 0){
-		ERROR("insufficient memory at list creation");
-		exit(EXIT_FAILURE);	
-	}
-
 	s = pthread_mutex_lock(&mtx);
 	if(s != 0){
 		PTHREAD_ERROR("pthread_mutex_lock", s);
 		exit(EXIT_FAILURE);
+	}
+	
+	if((p = (CONNECTION *)malloc(sizeof(CONNECTION))) == 0){
+		ERROR("insufficient memory at list creation");
+		exit(EXIT_FAILURE);	
 	}
 
 	if((i=loadNOD(p, remote_sfd, their_addr))!=1){
