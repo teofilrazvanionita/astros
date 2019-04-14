@@ -38,7 +38,8 @@ void set_myhostname_Defaults (void)
 		exit(EXIT_FAILURE);
 	}
 	
-	strncat(smtpd_config.myhostname, smtpd_config.mydomain, sizeof(smtpd_config.myhostname));
+	strcat(smtpd_config.myhostname, ".");
+	strcat(smtpd_config.myhostname, smtpd_config.mydomain);
 	Dprintf("myhostname = %s\n", smtpd_config.myhostname);
 
 }
