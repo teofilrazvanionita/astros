@@ -46,11 +46,21 @@ void set_myhostname_Defaults (void)
 void set_mydomain_Defaults (void)
 {
 	int rv;
+	char temp_mydomain[256];
 
-	if((rv = getdomainname(smtpd_config.mydomain,sizeof(smtpd_config.mydomain))) == -1){
+	memset(temp_mydomain, 0, 256);
+
+	if((rv = getdomainname(temp_mydomain,sizeof(temp_mydomain))) == -1){
 		ERROR("getdomainname");
 		exit(EXIT_FAILURE);
 	}
+	Dprintf("temp_mydomain = %s\n", temp_mydomain);
+
+	if(strcmp(temp_mydomain, "(none)") == 0)
+		strcpy(smtpd_config.mydomain, "localdomain");
+	else
+		strcpy(smtpd_config.mydomain, temp_mydomain);
+
 	Dprintf("mydomain = %s\n", smtpd_config.mydomain);
 }
 
