@@ -72,3 +72,17 @@ void set_myorigin_Defaults (void)
 
 	Dprintf("myorigin = %s\n", smtpd_config.myorigin);
 }
+
+void set_mail_name_Defaults (void)
+{
+	strcpy(smtpd_config.mail_name, "Astros");
+
+	Dprintf("mail_name = %s\n", smtpd_config.mail_name);
+}
+
+void set_mail_owner_Defaults (void)
+{
+	strcpy(smtpd_config.mail_owner, "astros");
+
+	Dprintf("mail_owner = %s\n", smtpd_config.mail_owner);
+}

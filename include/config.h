@@ -15,6 +15,7 @@ typedef struct {
 	char myhostname[256];
 	char mydomain[256];
 	char myorigin[256];
+	char mail_name[256];
 	char mail_owner[256];
 	char setgid_group[256];
 	char message_size_limit[256];
@@ -29,5 +30,7 @@ void loadConfigs (void);
 void set_myhostname_Defaults (void);
 void set_mydomain_Defaults (void);
 void set_myorigin_Defaults (void);
+void set_mail_name_Defaults (void);
+void set_mail_owner_Defaults (void);
 
 #endif
