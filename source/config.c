@@ -15,6 +15,7 @@ void setDefaults (void)
 
 	set_mydomain_Defaults();
 	set_myhostname_Defaults();
+	set_myorigin_Defaults();
 }
 
 void parseConfigFile (void)
@@ -65,3 +66,9 @@ void set_mydomain_Defaults (void)
 	Dprintf("mydomain = %s\n", smtpd_config.mydomain);
 }
 
+void set_myorigin_Defaults (void)
+{
+	strcpy(smtpd_config.myorigin, smtpd_config.myhostname);
+
+	Dprintf("myorigin = %s\n", smtpd_config.myorigin);
+}

@@ -28,5 +28,6 @@ void setDefaults (void);
 void loadConfigs (void);
 void set_myhostname_Defaults (void);
 void set_mydomain_Defaults (void);
+void set_myorigin_Defaults (void);
 
 #endif
