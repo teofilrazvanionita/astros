@@ -16,6 +16,8 @@ void setDefaults (void)
 	set_mydomain_Defaults();
 	set_myhostname_Defaults();
 	set_myorigin_Defaults();
+	set_mail_name_Defaults();
+	set_mail_owner_Defaults();
 }
 
 void parseConfigFile (void)
