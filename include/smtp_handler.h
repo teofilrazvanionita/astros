@@ -12,4 +12,18 @@
 
 void handleConnection (CONNECTION *p);
 
+typedef struct {
+	const char *HELO;
+	const char *EHLO;
+	const char *MAIL;
+	const char *RECIPIENT;
+	const char *DATA;
+	const char *RESET;
+	const char *VERIFY;
+	const char *EXPAND;
+	const char *HELP;
+	const char *NOOP;
+	const char *QUIT;
+} SMTP_COMMANDS;
+
 #endif

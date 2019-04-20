@@ -1,5 +1,7 @@
 #include "smtp_handler.h"
 
+SMTP_COMMANDS smtp_commands = {"HELO", "EHLO", "MAIL FROM:", "RCPT TO:", "DATA", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "QUIT"};
+
 void handleConnection(CONNECTION *p)
 {
 	ssize_t read_count;
