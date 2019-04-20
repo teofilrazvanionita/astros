@@ -17,6 +17,7 @@ typedef struct {
 	char myorigin[256];
 	char mail_name[256];
 	char mail_owner[256];
+	char queue_directory[256];
 	char setgid_group[256];
 	char message_size_limit[256];
 	char smtpd_recipient_restrictions[256];
@@ -32,5 +33,6 @@ void set_mydomain_Defaults (void);
 void set_myorigin_Defaults (void);
 void set_mail_name_Defaults (void);
 void set_mail_owner_Defaults (void);
+void set_queue_directory_Defaults (void);
 
 #endif

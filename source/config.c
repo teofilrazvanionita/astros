@@ -18,6 +18,7 @@ void setDefaults (void)
 	set_myorigin_Defaults();
 	set_mail_name_Defaults();
 	set_mail_owner_Defaults();
+	set_queue_directory_Defaults();
 }
 
 void parseConfigFile (void)
@@ -87,4 +88,11 @@ void set_mail_owner_Defaults (void)
 	strcpy(smtpd_config.mail_owner, "astros");
 
 	Dprintf("mail_owner = %s\n", smtpd_config.mail_owner);
+}
+
+void set_queue_directory_Defaults (void)
+{
+	strcpy(smtpd_config.queue_directory, "/var/spool/astros");
+
+	Dprintf("queue_directory = %s\n", smtpd_config.queue_directory);
 }
