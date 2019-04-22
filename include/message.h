@@ -15,7 +15,7 @@ typedef struct DATA {
 
 typedef struct MESSAGE {
 	char *from;
-	RCPT_TO *rcpt_to;
+	RCPT_TO *to;
 
 	DATA *data;
 } MESSAGE;
