@@ -26,4 +26,8 @@ typedef struct {
 	const char *QUIT;
 } SMTP_COMMANDS;
 
+typedef struct {
+	const char GREETING*;
+} SMTP_REPLIES
+
 #endif

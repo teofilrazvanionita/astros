@@ -1,6 +1,7 @@
 #include "smtp_handler.h"
 
 SMTP_COMMANDS smtp_commands = {"HELO", "EHLO", "MAIL FROM:", "RCPT TO:", "DATA", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "QUIT"};
+SMTP_REPLIES smtp_replies = {"220 %s SMTP Astros"};
 
 void handleConnection(CONNECTION *p)
 {
