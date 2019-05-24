@@ -9,8 +9,11 @@
 #include "connection_threads.h"
 #include "errorlog.h"
 #include "log.h"
+#include "config.h"
 
 void handleConnection (CONNECTION *p);
+void readCommand (void);
+void interpretCommand (void);
 
 typedef struct {
 	const char *HELO;
@@ -29,5 +32,8 @@ typedef struct {
 typedef struct {
 	const char *GREETING;
 } SMTP_REPLIES;
+
+char REPLY_STRING[256];
+char RECEIVED_STRING[256];
 
 #endif
