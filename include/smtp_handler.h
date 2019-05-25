@@ -12,8 +12,8 @@
 #include "config.h"
 
 void handleConnection (CONNECTION *p);
-void readCommand (void);
-void interpretCommand (void);
+void readCommand (char *RECEIVED_STRING);
+void interpretCommand (char *RECEIVED_STRING);
 
 typedef struct {
 	const char *HELO;
@@ -32,8 +32,5 @@ typedef struct {
 typedef struct {
 	const char *GREETING;
 } SMTP_REPLIES;
-
-char REPLY_STRING[256];
-char RECEIVED_STRING[256];
 
 #endif

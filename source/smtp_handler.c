@@ -5,6 +5,9 @@ SMTP_REPLIES smtp_replies = {"220 %s SMTP Astros"};
 
 void handleConnection(CONNECTION *p)
 {
+	char REPLY_STRING[512];
+	char RECEIVED_STRING[512];
+
 	logConnectFrom(&p -> their_addr, p -> remote_name);
 
 	/* send SMTP GREETING to client */
@@ -18,17 +21,17 @@ void handleConnection(CONNECTION *p)
 	}
 
 	while(1){
-		readCommand();
-		interpretCommand();
+		readCommand(RECEIVED_STRING);
+		interpretCommand(RECEIVED_STRING);
 	}
 }
 
-void readCommand(void)
+void readCommand(char *RECEIVED_STRING)
 {
 
 }
 
-void interpretCommand(void)
+void interpretCommand(char *RECEIVED_STRING)
 {
 
 }
