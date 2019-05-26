@@ -31,6 +31,12 @@ typedef struct {
 
 typedef struct {
 	const char *GREETING;
+	const char *SERVICE_CLOSE;
+	const char *OK_HOST;
+	const char *REQ_OK;
+	const char *SYNTAX_ERR_CMD_NOT_RECOGN;
+	const char *SYNTAX_ERR_IN_PARAM_ARG;
+	const char *CMD_NOT_IMPL;
 } SMTP_REPLIES;
 
 #endif

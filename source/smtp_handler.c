@@ -1,7 +1,7 @@
 #include "smtp_handler.h"
 
 SMTP_COMMANDS smtp_commands = {"HELO", "EHLO", "MAIL FROM:", "RCPT TO:", "DATA", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "QUIT"};
-SMTP_REPLIES smtp_replies = {"220 %s SMTP Astros"};
+SMTP_REPLIES smtp_replies = {"220 %s SMTP Astros", "221 Bye", "250 %s", "250 Ok", "500 Error: Command unrecognized", "501 Syntax : %s", "502 Error: Command not implemented"};
 
 void handleConnection(CONNECTION *p)
 {
