@@ -12,7 +12,7 @@
 #include "config.h"
 
 void handleConnection (CONNECTION *p);
-void readCommand (char *RECEIVED_STRING);
+int readCommand (CONNECTION *p, char *RECEIVED_STRING);
 void interpretCommand (char *RECEIVED_STRING);
 
 typedef struct {

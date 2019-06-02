@@ -21,14 +21,44 @@ void handleConnection(CONNECTION *p)
 	}
 
 	while(1){
-		readCommand(RECEIVED_STRING);
+		if(readCommand(p, RECEIVED_STRING) == -1){ // Command too long; discard rest of the line
+			char ch;
+			while(read(p -> remote_sfd, &ch, 1) == 1 && ch != '\n'){
+				int count = 0;
+				count++;
+				if(count > 10000000){ // TODO: send reply, close connection
+					
+				}
+			}
+		}
 		interpretCommand(RECEIVED_STRING);
 	}
 }
 
-void readCommand(char *RECEIVED_STRING)
+int readCommand(CONNECTION *p, char *RECEIVED_STRING)
 {
-
+	char buf;
+	ssize_t bytes_read;
+	int count = 0;
+	
+	memset(RECEIVED_STRING, 0, 512);
+	while(1){
+		if((bytes_read = read(p -> remote_sfd, &buf, 1)) != 1){
+			if(bytes_read == -1){
+				ERROR("read");
+				exit(EXIT_FAILURE);
+			}
+			if(!bytes_read){ // EOF (connection closed on remote end)
+			
+			}
+		}
+		count++;
+		strncat(RECEIVED_STRING, &buf, 1);
+		if(count == 512 && buf != '\n')
+			return -1;
+		if(buf == '\n')
+			return 0;
+	}
 }
 
 void interpretCommand(char *RECEIVED_STRING)
