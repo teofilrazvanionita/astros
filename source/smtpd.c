@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 	struct addrinfo hints, *servinfo, *p;
         int rv ,s; // return value
        	int yes = 1;
-	pthread_t tid_free;
+	pthread_t tid_free, tid_join;
 
 	memset(&hints, 0, sizeof hints);
         hints.ai_family = AF_INET;
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	/* create a thread for joining all terminated connections */
-	s = pthread_create(&tid_free, NULL, threadJoin, NULL);
+	s = pthread_create(&tid_join, NULL, threadJoin, NULL);
 	if (s != 0){
 		PTHREAD_ERROR("pthread_create", s);
 		return 0;

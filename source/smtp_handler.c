@@ -48,7 +48,7 @@ int readCommand(CONNECTION *p, char *RECEIVED_STRING)
 				ERROR("read");
 				exit(EXIT_FAILURE);
 			}
-			if(!bytes_read){ // EOF (connection closed on remote end)
+			if(!bytes_read){ // EOF (connection closed on remote end) TODO: close connection
 			
 			}
 		}
@@ -63,5 +63,5 @@ int readCommand(CONNECTION *p, char *RECEIVED_STRING)
 
 void interpretCommand(char *RECEIVED_STRING)
 {
-
+	Dprintf("RECEIVED_STRING = %s", RECEIVED_STRING);
 }
