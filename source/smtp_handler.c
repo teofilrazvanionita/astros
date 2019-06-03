@@ -21,7 +21,8 @@ void handleConnection(CONNECTION *p)
 	}
 
 	while(1){
-		if(readCommand(p, RECEIVED_STRING) == -1){ // Command too long; discard rest of the line
+		int i;
+		if((i = readCommand(p, RECEIVED_STRING)) == -1){ // Command too long; discard rest of the line
 			char ch;
 			while(read(p -> remote_sfd, &ch, 1) == 1 && ch != '\n'){
 				int count = 0;
@@ -31,6 +32,8 @@ void handleConnection(CONNECTION *p)
 				}
 			}
 		}
+		if(i == 0) // EOF
+			break;
 		interpretCommand(RECEIVED_STRING);
 	}
 }
@@ -48,8 +51,8 @@ int readCommand(CONNECTION *p, char *RECEIVED_STRING)
 				ERROR("read");
 				exit(EXIT_FAILURE);
 			}
-			if(!bytes_read){ // EOF (connection closed on remote end) TODO: close connection
-			
+			if(!bytes_read){ // EOF (connection closed on remote end)
+				return 0;
 			}
 		}
 		count++;
@@ -57,7 +60,7 @@ int readCommand(CONNECTION *p, char *RECEIVED_STRING)
 		if(count == 512 && buf != '\n')
 			return -1;
 		if(buf == '\n')
-			return 0;
+			return 1;
 	}
 }
 
