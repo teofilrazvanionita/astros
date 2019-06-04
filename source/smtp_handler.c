@@ -64,8 +64,16 @@ void interpretCommand(CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STRING)
 
 	if(RECEIVED_STRING[511] != 0 && RECEIVED_STRING[511] != '\n'){
 		constructReply(REPLY_STRING, 7);
-		sendReply(p, REPLY_STRING);	
+		sendReply(p, REPLY_STRING);
+		return;	
 	}
+	if((RECEIVED_STRING[0] == '\r' && RECEIVED_STRING[1] == '\n') || RECEIVED_STRING[0] == '\n'){	// Command empty
+		constructReply(REPLY_STRING, 5);
+		sendReply(p, REPLY_STRING);
+		return;
+	}
+
+
 }
 
 void constructReply (char *REPLY_STRING, int no)
@@ -88,6 +96,8 @@ void constructReply (char *REPLY_STRING, int no)
 			break;
 		case 5:
 			memset(REPLY_STRING, 0, 512);
+			sprintf(REPLY_STRING, "%s\n", smtp_replies.SYNTAX_ERR_CMD_NOT_RECOGN);
+			Dprintf("REPLY_STRING = %s", REPLY_STRING);
 			break;
 		case 6:
 			memset(REPLY_STRING, 0, 512);
