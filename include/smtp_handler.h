@@ -13,7 +13,9 @@
 
 void handleConnection (CONNECTION *p);
 int readCommand (CONNECTION *p, char *RECEIVED_STRING);
-void interpretCommand (char *RECEIVED_STRING);
+void interpretCommand (CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STRING);
+void constructReply (char *REPLY_STRING, int no);
+void sendReply (CONNECTION *p, char *REPLY_STRING);
 
 typedef struct {
 	const char *HELO;

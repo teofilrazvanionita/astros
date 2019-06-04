@@ -11,14 +11,8 @@ void handleConnection(CONNECTION *p)
 	logConnectFrom(&p -> their_addr, p -> remote_name);
 
 	/* send SMTP GREETING to client */
-	memset(REPLY_STRING, 0, sizeof(REPLY_STRING));
-	sprintf(REPLY_STRING, smtp_replies.GREETING, smtpd_config.myhostname);
-	strcat(REPLY_STRING,"\n");
-	Dprintf("REPLY_STRING = %s", REPLY_STRING);
-	if(write(p -> remote_sfd, REPLY_STRING, sizeof(REPLY_STRING)) == -1){
-		ERROR("write");
-		exit(EXIT_FAILURE);
-	}
+	constructReply(REPLY_STRING, 1);
+	sendReply(p, REPLY_STRING);
 
 	while(1){
 		int i;
@@ -34,7 +28,7 @@ void handleConnection(CONNECTION *p)
 		}
 		if(i == 0) // EOF
 			break;
-		interpretCommand(RECEIVED_STRING);
+		interpretCommand(p, RECEIVED_STRING, REPLY_STRING);
 	}
 }
 
@@ -64,7 +58,52 @@ int readCommand(CONNECTION *p, char *RECEIVED_STRING)
 	}
 }
 
-void interpretCommand(char *RECEIVED_STRING)
+void interpretCommand(CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STRING)
 {
 	Dprintf("RECEIVED_STRING = %s", RECEIVED_STRING);
+
+	if(RECEIVED_STRING[511] != 0 && RECEIVED_STRING[511] != '\n'){
+		constructReply(REPLY_STRING, 7);
+		sendReply(p, REPLY_STRING);	
+	}
+}
+
+void constructReply (char *REPLY_STRING, int no)
+{
+	switch (no){
+		case 1:
+			memset(REPLY_STRING, 0, 512);
+			sprintf(REPLY_STRING, smtp_replies.GREETING, smtpd_config.myhostname);
+			strcat(REPLY_STRING,"\n");
+			Dprintf("REPLY_STRING = %s", REPLY_STRING);
+			break;
+		case 2:
+			memset(REPLY_STRING, 0, 512);
+			break;
+		case 3:
+			memset(REPLY_STRING, 0, 512);
+			break;
+		case 4:
+			memset(REPLY_STRING, 0, 512);
+			break;
+		case 5:
+			memset(REPLY_STRING, 0, 512);
+			break;
+		case 6:
+			memset(REPLY_STRING, 0, 512);
+			break;
+		case 7:
+			memset(REPLY_STRING, 0, 512);
+			sprintf(REPLY_STRING, "%s\n", smtp_replies.CMD_NOT_IMPL);	
+			Dprintf("REPLY_STRING = %s", REPLY_STRING);
+			break;
+	}
+}
+
+void sendReply (CONNECTION *p, char *REPLY_STRING)
+{
+	if(write(p -> remote_sfd, REPLY_STRING, 512) == -1){
+		ERROR("write");
+		exit(EXIT_FAILURE);
+	}
 }
