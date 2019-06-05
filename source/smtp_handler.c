@@ -7,6 +7,7 @@ void handleConnection(CONNECTION *p)
 {
 	char REPLY_STRING[512];
 	char RECEIVED_STRING[512];
+	LINEOBJ *pLO;
 
 	logConnectFrom(&p -> their_addr, p -> remote_name);
 
@@ -28,7 +29,7 @@ void handleConnection(CONNECTION *p)
 		}
 		if(i == 0) // EOF
 			break;
-		interpretCommand(p, RECEIVED_STRING, REPLY_STRING);
+		pLO = interpretCommand(p, RECEIVED_STRING, REPLY_STRING);
 	}
 }
 
@@ -58,22 +59,31 @@ int readCommand(CONNECTION *p, char *RECEIVED_STRING)
 	}
 }
 
-void interpretCommand(CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STRING)
+LINEOBJ *interpretCommand(CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STRING)
 {
+	LINEOBJ *pLO;
+
 	Dprintf("RECEIVED_STRING = %s", RECEIVED_STRING);
 
 	if(RECEIVED_STRING[511] != 0 && RECEIVED_STRING[511] != '\n'){
 		constructReply(REPLY_STRING, 7);
 		sendReply(p, REPLY_STRING);
-		return;	
+		return NULL;	
 	}
 	if((RECEIVED_STRING[0] == '\r' && RECEIVED_STRING[1] == '\n') || RECEIVED_STRING[0] == '\n'){	// Command empty
 		constructReply(REPLY_STRING, 5);
 		sendReply(p, REPLY_STRING);
-		return;
+		return NULL;
 	}
 
-
+	pLO = splitLine(RECEIVED_STRING);
+	if(validateLine(pLO, REPLY_STRING)){
+		return pLO;
+	}
+	else{
+		freeLineObj(pLO);
+		return NULL;
+	}
 }
 
 void constructReply (char *REPLY_STRING, int no)

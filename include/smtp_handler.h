@@ -11,11 +11,10 @@
 #include "log.h"
 #include "config.h"
 
-void handleConnection (CONNECTION *p);
-int readCommand (CONNECTION *p, char *RECEIVED_STRING);
-void interpretCommand (CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STRING);
-void constructReply (char *REPLY_STRING, int no);
-void sendReply (CONNECTION *p, char *REPLY_STRING);
+typedef struct LINEOBJ {
+	char word_obj[512];
+	struct LINEOBJ *next;
+} LINEOBJ;
 
 typedef struct {
 	const char *HELO;
@@ -40,5 +39,14 @@ typedef struct {
 	const char *SYNTAX_ERR_IN_PARAM_ARG;
 	const char *CMD_NOT_IMPL;
 } SMTP_REPLIES;
+
+void handleConnection (CONNECTION *p);
+int readCommand (CONNECTION *p, char *RECEIVED_STRING);
+LINEOBJ *interpretCommand (CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STRING);
+void constructReply (char *REPLY_STRING, int no);
+void sendReply (CONNECTION *p, char *REPLY_STRING);
+LINEOBJ *splitLine(char *RECEIVED_STRING);
+int validateLine(LINEOBJ *pLO, char *REPLY_STRING);
+void freeLineObj(LINEOBJ *pLO);
 
 #endif
