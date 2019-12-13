@@ -1,7 +1,11 @@
 #include "smtp_handler.h"
 
-SMTP_COMMANDS smtp_commands = {"HELO", "EHLO", "MAIL FROM:", "RCPT TO:", "DATA", "RSET", "VRFY", "EXPN", "HELP", "NOOP", "QUIT"};
-SMTP_REPLIES smtp_replies = {"220 %s SMTP Astros", "221 Bye", "250 %s", "250 Ok", "500 Error: Command unrecognized", "501 Syntax : %s", "502 Error: Command not implemented"};
+SMTP_COMMANDS smtp_commands = {"HELO", "EHLO", "MAIL FROM:", "RCPT TO:", "DATA",
+                                "RSET", "VRFY", "EXPN", "HELP", "NOOP", "QUIT"};
+
+SMTP_REPLIES smtp_replies = {"220 %s SMTP Astros", "221 Bye", "250 %s", "250 Ok",
+                            "500 Error: Command unrecognized", "501 Syntax : %s",
+                            "502 Error: Command not implemented"};
 
 void handleConnection(CONNECTION *p)
 {
@@ -65,19 +69,8 @@ LINEOBJ *interpretCommand(CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STRI
 
 	Dprintf("RECEIVED_STRING = %s", RECEIVED_STRING);
 
-	if(RECEIVED_STRING[511] != 0 && RECEIVED_STRING[511] != '\n'){
-		constructReply(REPLY_STRING, 7);
-		sendReply(p, REPLY_STRING);
-		return NULL;	
-	}
-	if((RECEIVED_STRING[0] == '\r' && RECEIVED_STRING[1] == '\n') || RECEIVED_STRING[0] == '\n'){	// Command empty
-		constructReply(REPLY_STRING, 5);
-		sendReply(p, REPLY_STRING);
-		return NULL;
-	}
-
 	pLO = splitLine(RECEIVED_STRING);
-	if(validateLine(pLO, REPLY_STRING)){
+	if(validateLine(p, pLO, RECEIVED_STRING, REPLY_STRING)){
 		return pLO;
 	}
 	else{
@@ -126,4 +119,31 @@ void sendReply (CONNECTION *p, char *REPLY_STRING)
 		ERROR("write");
 		exit(EXIT_FAILURE);
 	}
+}
+
+LINEOBJ *splitLine(char *RECEIVED_STRING)
+{
+
+    return NULL;
+}
+
+int validateLine(CONNECTION *p, LINEOBJ *pLO, char *RECEIVED_STRING, char *REPLY_STRING)
+{
+        if(RECEIVED_STRING[511] != 0 && RECEIVED_STRING[511] != '\n'){
+		constructReply(REPLY_STRING, 7);
+		sendReply(p, REPLY_STRING);
+		return 0;	
+	}
+	if((RECEIVED_STRING[0] == '\r' && RECEIVED_STRING[1] == '\n') || RECEIVED_STRING[0] == '\n'){	// Command empty
+		constructReply(REPLY_STRING, 5);
+		sendReply(p, REPLY_STRING);
+		return 0;
+	}
+        
+        return 0;
+}
+
+void freeLineObj(LINEOBJ *pLO)
+{
+        
 }

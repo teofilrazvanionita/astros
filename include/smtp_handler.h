@@ -46,7 +46,7 @@ LINEOBJ *interpretCommand (CONNECTION *p, char *RECEIVED_STRING, char *REPLY_STR
 void constructReply (char *REPLY_STRING, int no);
 void sendReply (CONNECTION *p, char *REPLY_STRING);
 LINEOBJ *splitLine(char *RECEIVED_STRING);
-int validateLine(LINEOBJ *pLO, char *REPLY_STRING);
+int validateLine(CONNECTION *p, LINEOBJ *pLO, char *RECEIVED_STRING, char *REPLY_STRING);
 void freeLineObj(LINEOBJ *pLO);
 
 #endif
