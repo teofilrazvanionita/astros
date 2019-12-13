@@ -123,7 +123,10 @@ void sendReply (CONNECTION *p, char *REPLY_STRING)
 
 LINEOBJ *splitLine(char *RECEIVED_STRING)
 {
-
+    LINEOBJ *pLO = NULL;
+    
+    if(1)
+        return pLO;
     return NULL;
 }
 
